@@ -3,9 +3,9 @@ package org.example;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.example.Courier.Courier;
-import org.example.Courier.CourierClient;
-import org.example.Courier.CourierCredentials;
+import org.example.сourier.Courier;
+import org.example.сourier.CourierClient;
+import org.example.сourier.CourierCredentials;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -37,7 +37,7 @@ public class CourierCreateTest {
         courierId = courierClient.login(CourierCredentials.from(courier)).extract().path("id");
         int statusCode = response.extract().statusCode();
         boolean isCreated = response.extract().path("ok");
-        Assert.assertEquals(statusCode, 201);
+        Assert.assertEquals(201,statusCode);
         Assert.assertTrue(isCreated);
         assertThat("Courier ID is incorrect", courierId, is(not(0)));
     }
@@ -45,20 +45,18 @@ public class CourierCreateTest {
     @Test
     @DisplayName("Нельзя создать двух одинаковых курьеров")
     public void courierDoubleCanNotBeCreated()  {
-
         courierClient.create(courier);
         courierId = courierClient.login(CourierCredentials.from(courier)).extract().path("id");
         ValidatableResponse response = courierClient.create(courier);
         int statusCode = response.extract().statusCode();
         String messageError = response.extract().path("message");
-        Assert.assertEquals(statusCode, 409);
-        Assert.assertEquals(messageError, "Этот логин уже используется");
+        Assert.assertEquals(409,statusCode);
+        Assert.assertEquals( "Этот логин уже используется",messageError);
     }
 
     @Test
     @DisplayName("Нельзя создать курьера с существующим логином")
     public void courierCanNotBeCreatedWithExistingLogin()  {
-
         courierClient.create(courier);
         courierId = courierClient.login(CourierCredentials.from(courier)).extract().path("id");
         courier.setPassword(RandomStringUtils.randomAlphabetic(5));
@@ -66,8 +64,8 @@ public class CourierCreateTest {
         ValidatableResponse response = courierClient.create(courier);
         int statusCode = response.extract().statusCode();
         String messageError = response.extract().path("message");
-        Assert.assertEquals(statusCode, 409);
-        Assert.assertEquals(messageError, "Этот логин уже используется");
+        Assert.assertEquals(409,statusCode);
+        Assert.assertEquals("Этот логин уже используется", messageError);
     }
 }
 

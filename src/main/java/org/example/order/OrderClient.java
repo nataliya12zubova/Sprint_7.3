@@ -1,8 +1,8 @@
-package org.example.Order;
+package org.example.order;
 
 import io.qameta.allure.Step;
 import io.restassured.response.ValidatableResponse;
-import org.example.Courier.Client;
+import org.example.сourier.Client;
 
 import static io.restassured.RestAssured.given;
 

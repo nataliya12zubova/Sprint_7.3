@@ -1,4 +1,4 @@
-package org.example.Courier;
+package org.example.сourier;
 
 import io.restassured.response.ValidatableResponse;
 import static io.restassured.RestAssured.given;
@@ -14,7 +14,8 @@ public class CourierClient extends Client {
                 .spec(getSpec())
                 .body(courier)
                 .when()
-                .post(COURIER_PATH).then();
+                .post(COURIER_PATH)
+                .then();
     }
 
     @Step

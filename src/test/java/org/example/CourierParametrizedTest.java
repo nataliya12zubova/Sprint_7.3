@@ -2,10 +2,11 @@ package org.example;
 
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
-import org.example.Courier.Courier;
-import org.example.Courier.CourierClient;
-import org.example.Courier.CourierCredentials;
+import org.example.сourier.Courier;
+import org.example.сourier.CourierClient;
+import org.example.сourier.CourierCredentials;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -23,25 +24,25 @@ public class CourierParametrizedTest {
     this.expectedMessageError = expectedMessageError;
     }
 
-@Parameterized.Parameters
-public static Object[] getTestData() {
-    return new Object[][]{
-            {CourierCredentials.from(Courier.getCourierWithLoginAndPassword()), 404, "Учетная запись не найдена"},
-            {CourierCredentials.getCourierCredentialsWithInvalidLogin(Courier.getCourierWithLoginAndPassword()), 404, "Учетная запись не найдена"},
-            {CourierCredentials.getCourierCredentialsWithInvalidPassword(Courier.getCourierWithLoginAndPassword()), 404, "Учетная запись не найдена"},
-            {CourierCredentials.from(Courier.getCourierWithLoginOnly()), 400, "Недостаточно данных для входа"},
-            {CourierCredentials.from(Courier.getCourierWithPasswordOnly()), 400, "Недостаточно данных для входа"}
-    };
-}
+    @Parameterized.Parameters
+    public static Object[] getTestData() {
+        return new Object[][]{
+                {CourierCredentials.from(Courier.getCourierWithLoginAndPassword()), 404, "Учетная запись не найдена"},
+                {CourierCredentials.getCourierCredentialsWithInvalidLogin(Courier.getCourierWithLoginAndPassword()), 404, "Учетная запись не найдена"},
+                {CourierCredentials.getCourierCredentialsWithInvalidPassword(Courier.getCourierWithLoginAndPassword()), 404, "Учетная запись не найдена"},
+                {CourierCredentials.from(Courier.getCourierWithLoginOnly()), 400, "Недостаточно данных для входа"},
+                {CourierCredentials.from(Courier.getCourierWithPasswordOnly()), 400, "Недостаточно данных для входа"}
+        };
+    }
 
-@Test
-@DisplayName("Нельзя залогиниться с некорректными данными")
-public void courierLoginWithInvalidData() {
-    ValidatableResponse response = new CourierClient().login(courierCredentials);
-    int actualCodeResult = response.extract().statusCode();
-    String actualMessageError = response.extract().path("message");
-    Assert.assertEquals(actualCodeResult, expectedCodeResult);
-    Assert.assertEquals(actualMessageError, expectedMessageError);
+    @Test
+    @DisplayName("Нельзя залогиниться с некорректными данными")
+    public void courierLoginWithInvalidData() {
+        ValidatableResponse response = new CourierClient().login(courierCredentials);
+        int actualCodeResult = response.extract().statusCode();
+        Assert.assertEquals(expectedCodeResult,actualCodeResult);
+        String actualMessageError = response.extract().path("message");
+        Assert.assertEquals(expectedMessageError,actualMessageError);
     }
 }
 

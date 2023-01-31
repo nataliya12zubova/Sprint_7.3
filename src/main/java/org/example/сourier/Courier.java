@@ -1,7 +1,5 @@
-package org.example.Courier;
+package org.example.сourier;
 
-import io.restassured.response.ValidatableResponse;
-import static io.restassured.RestAssured.given;
 import org.apache.commons.lang3.RandomStringUtils;
 
 public class Courier {
@@ -10,12 +8,13 @@ public class Courier {
     public String password;
     public String firstName;
 
+    public Courier(){};
+
     public Courier(String login, String password, String firstName) {
         this.login = login;
         this.password = password;
         this.firstName = firstName;
     }
-    public Courier(){}
 
     public Courier setLogin(String login) {
         this.login = login;

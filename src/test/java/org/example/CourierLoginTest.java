@@ -2,9 +2,9 @@ package org.example;
 
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
-import org.example.Courier.Courier;
-import org.example.Courier.CourierClient;
-import org.example.Courier.CourierCredentials;
+import org.example.сourier.Courier;
+import org.example.сourier.CourierClient;
+import org.example.сourier.CourierCredentials;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -35,11 +35,9 @@ public class CourierLoginTest {
     public void courierCanLogin() {
 
         ValidatableResponse response = courierClient.login(CourierCredentials.from(courier));
-
         int statusCode = response.extract().statusCode();
         courierId = response.extract().path("id");
-
-        Assert.assertEquals(statusCode, 200);
+        Assert.assertEquals( 200,statusCode);
         assertThat("Courier ID is incorrect", courierId, is(not(0)));
     }
 }

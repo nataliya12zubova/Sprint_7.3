@@ -2,8 +2,8 @@ package org.example;
 
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
-import org.example.Order.Order;
-import org.example.Order.OrderClient;
+import org.example.order.Order;
+import org.example.order.OrderClient;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,8 +23,9 @@ public class OrderListTest {
     public void getOrderList (){
         ValidatableResponse response = orderClient.getAllOrders();
         int statusCode = response.extract().statusCode();
-        List <Object> orders = response.extract().jsonPath().getList("orders");
-        Assert.assertEquals(statusCode,200);
+        List<Object> orders = response.extract().jsonPath().getList("orders");
+        Assert.assertEquals(200, statusCode);
         Assert.assertFalse(orders.isEmpty());
     }
 }
+

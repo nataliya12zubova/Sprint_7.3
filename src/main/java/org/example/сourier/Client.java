@@ -1,4 +1,4 @@
-package org.example.Courier;
+package org.example.сourier;
 
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
